@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liz Kaplan | Cognitive Science PhD Student </title>
-  <meta name="description" content="Graduate student website: research, publications, posters, and CV." />
+  <title>Elizabeth “Liz” Kaplan | Cognitive Science PhD</title>
+  <meta name="description" content="Elizabeth “Liz” Kaplan — Cognitive Science PhD student. Research, projects, publications, posters, and CV." />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
+      /* sage/cream */
       --cream:#fbf7ef;
       --cream2:#f6f1e6;
       --sage:#88a89a;
       --sage2:#5f8475;
       --moss:#355b4f;
+
       --ink:#1f2937;
-      --muted:#5b6b62;
+      --muted:#55645c;
+
       --card: rgba(255,255,255,0.62);
       --card-border: rgba(255,255,255,0.78);
+
       --shadow: 0 14px 40px rgba(31,41,55,0.10);
       --shadow-soft: 0 10px 24px rgba(31,41,55,0.08);
-      --link: #2f6b58;
-      --focus: rgba(95,132,117,0.25);
+
+      --link:#2f6b58;
+      --ring: rgba(95,132,117,0.25);
     }
 
     *{ box-sizing:border-box; }
@@ -40,12 +44,35 @@
         linear-gradient(135deg, var(--cream), var(--cream2));
       min-height:100vh;
     }
-    a{ color: var(--link); text-decoration:none; font-weight:750; }
+
+    /* subtle grain */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(rgba(53,91,79,0.06) 1px, transparent 1.2px),
+        radial-gradient(rgba(53,91,79,0.04) 1px, transparent 1.2px);
+      background-size: 60px 60px, 110px 110px;
+      background-position: 0 0, 30px 45px;
+      opacity:0.55;
+      filter: blur(0.2px);
+      z-index:0;
+    }
+
+    a{ color: var(--link); text-decoration:none; font-weight:800; }
     a:hover{ text-decoration:underline; }
 
-    .wrap{ max-width: 1000px; margin:0 auto; padding: 22px 18px 52px; }
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width: 980px;
+      margin:0 auto;
+      padding: 22px 18px 44px;
+    }
 
-    /* top nav */
+    /* top nav — simple like “about / projects / publications” */
     .topbar{
       position:sticky;
       top:12px;
@@ -61,12 +88,13 @@
       backdrop-filter: blur(12px);
       box-shadow: 0 12px 26px rgba(31,41,55,0.10);
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
       padding-left:6px;
-      min-width: 200px;
+      min-width: 220px;
     }
     .mark{
       width:34px;
@@ -79,8 +107,8 @@
       border: 1px solid rgba(255,255,255,0.92);
       box-shadow: 0 10px 22px rgba(136,168,154,0.25);
     }
-    .brand strong{ font-size:0.98rem; font-weight:900; }
-    .brand span{ color:var(--muted); font-size:0.85rem; display:block; margin-top:1px; }
+    .brand strong{ font-size:0.98rem; font-weight:900; line-height:1.05; }
+    .brand span{ color:var(--muted); font-size:0.84rem; display:block; margin-top:2px; }
 
     nav{
       display:flex;
@@ -95,9 +123,9 @@
       cursor:pointer;
       background: transparent;
       color: var(--ink);
-      font-weight: 800;
+      font-weight: 850;
       font-size:0.92rem;
-      padding: 7px 10px;
+      padding:7px 10px;
       border-radius: 999px;
       transition: background .15s ease, transform .15s ease;
     }
@@ -106,13 +134,13 @@
       transform: translateY(-1px);
     }
     .navlink[aria-current="page"]{
-      background: rgba(255,255,255,0.75);
-      box-shadow: 0 10px 20px rgba(31,41,55,0.08);
-      outline: 2px solid rgba(95,132,117,0.25);
+      background: rgba(255,255,255,0.76);
+      outline: 2px solid var(--ring);
       outline-offset: 2px;
+      box-shadow: 0 10px 20px rgba(31,41,55,0.08);
     }
 
-    /* panels */
+    /* “page” panels */
     .panel{
       margin-top:18px;
       padding: 24px 22px;
@@ -123,7 +151,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* section visibility */
     .view{ display:none; }
     .view.active{ display:block; animation: fade .18s ease-out; }
     @keyframes fade{
@@ -131,54 +158,46 @@
       to{ opacity:1; transform: translateY(0); }
     }
 
-    /* home layout */
-    .hero-grid{
+    /* headings */
+    h1{
+      margin:0 0 10px;
+      font-family:"Fraunces", serif;
+      font-size: clamp(2.0rem, 3.8vw, 3.0rem);
+      line-height:1.05;
+      color:#20312b;
+      letter-spacing:-0.01em;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 1.02rem;
+      line-height:1.65;
+    }
+
+    /* home */
+    .home-grid{
       display:grid;
-      grid-template-columns: 0.9fr 1.1fr;
+      grid-template-columns: 0.92fr 1.08fr;
       gap: 18px;
       align-items:center;
     }
     .headshot{
       width:100%;
-      max-width: 330px;
-      aspect-ratio: 1 / 1;
+      max-width: 320px;
+      aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 22px;
       border: 1px solid rgba(255,255,255,0.9);
       box-shadow: 0 16px 32px rgba(31,41,55,0.12);
       background: linear-gradient(135deg, #ffffff, #eef7f1);
     }
-    h1{
-      margin:0 0 10px;
-      font-family:"Fraunces", serif;
-      font-size: clamp(2.0rem, 3.8vw, 3.1rem);
-      line-height:1.05;
-      color:#20312b;
-    }
-    .subtitle{ margin:0; color:var(--muted); font-size:1.02rem; }
-    .buttons{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.80);
-      background: rgba(255,255,255,0.70);
-      color: var(--ink);
-      font-weight: 900;
-      box-shadow: var(--shadow-soft);
-      transition: transform .15s ease;
-    }
-    .btn:hover{ transform: translateY(-2px); text-decoration:none; }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(136,168,154,0.95), rgba(95,132,117,0.95));
-      color:white;
-      border:none;
-      box-shadow: 0 16px 34px rgba(95,132,117,0.22);
+    .smallnote{
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: var(--muted);
     }
 
-    /* content blocks */
+    /* sections inside other tabs */
     .section{
       margin-top: 14px;
       padding: 18px 18px;
@@ -209,7 +228,7 @@
       box-shadow: 0 10px 22px rgba(31,41,55,0.07);
     }
     .card h3{ margin:0 0 6px; color:#22312b; font-size:1.05rem; }
-    .card p{ margin:0; color:var(--muted); font-size:0.95rem; }
+    .card p{ margin:0; color:var(--muted); font-size:0.95rem; line-height:1.6; }
 
     .list{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
     .item{
@@ -220,7 +239,7 @@
       box-shadow: 0 10px 22px rgba(31,41,55,0.07);
     }
     .item b{ color:#22312b; }
-    .meta{ margin-top:8px; color:var(--muted); font-size:0.95rem; }
+    .meta{ margin-top:8px; color:var(--muted); font-size:0.95rem; line-height:1.6; }
     .links{ margin-top:10px; display:flex; flex-wrap:wrap; gap:10px; }
     .pill{
       display:inline-flex;
@@ -235,26 +254,38 @@
     }
     .pill:hover{ text-decoration:none; transform: translateY(-1px); }
 
-    .notice{
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.64);
-      border: 1px solid rgba(255,255,255,0.82);
-      color: var(--muted);
+    /* CV frame */
+    .frame{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.85);
+      box-shadow: var(--shadow-soft);
+      background:white;
     }
+    iframe{ width:100%; height:78vh; border:0; }
 
+    /* footer — contact/social lives here (no contact tab) */
     footer{
       margin-top: 18px;
+      padding: 18px 10px 8px;
       text-align:center;
       color: var(--muted);
-      font-size:0.9rem;
-      padding: 18px 10px;
+      font-size:0.92rem;
+    }
+    .social{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap: 14px;
+      margin-top: 8px;
+      font-weight:800;
     }
 
     @media (max-width: 900px){
-      .hero-grid{ grid-template-columns: 1fr; }
+      .home-grid{ grid-template-columns: 1fr; }
       .headshot{ max-width: 260px; }
       .card{ grid-column: span 12; }
+      .brand{ min-width: unset; }
     }
   </style>
 </head>
@@ -265,65 +296,36 @@
       <div class="brand">
         <div class="mark" aria-hidden="true"></div>
         <div>
-          <strong>Your Name</strong>
+          <strong>Elizabeth “Liz” Kaplan</strong>
           <span>Cognitive Science PhD Student</span>
         </div>
       </div>
 
       <nav aria-label="Primary">
-        <button class="navlink" data-view="home" aria-current="page">Home</button>
-        <button class="navlink" data-view="about">About</button>
-        <button class="navlink" data-view="research">Research</button>
-        <button class="navlink" data-view="publications">Publications</button>
-        <button class="navlink" data-view="cv">CV</button>
-        <button class="navlink" data-view="contact">Contact</button>
+        <button class="navlink" data-view="home" aria-current="page">home</button>
+        <button class="navlink" data-view="about">about</button>
+        <button class="navlink" data-view="projects">projects</button>
+        <button class="navlink" data-view="publications">publications</button>
+        <button class="navlink" data-view="cv">cv</button>
       </nav>
     </div>
 
-    <!-- HOME -->
+    <!-- HOME (clean: headshot + intro only; no “highlights”, no button stack under blurb) -->
     <main id="home" class="view active">
       <section class="panel">
-        <div class="hero-grid">
-          <img class="headshot" src="Headshot.jpg" alt="Headshot of Liz Kaplan" />
+        <div class="home-grid">
+          <img class="headshot" src="headshot.jpg" alt="Headshot of Elizabeth “Liz” Kaplan" />
           <div>
-            <h1>Liz Kaplan</h1>
+            <h1>Hi, I’m Liz.</h1>
             <p class="subtitle">
-              I’m a Cognitive Science PhD student at <b>the University of California, San Diego</b>. I study <b>your focus</b> —
-              broadly, how people <b>learn</b>, <b>make decisions</b>, and <b>adapt</b> in real-world environments.
+              I’m a Cognitive Science PhD student. My research focuses on <b>[your focus area]</b> —
+              broadly, how people <b>[learn / think / decide / adapt]</b> in real-world contexts.
             </p>
-
-            <div class="buttons">
-              <a class="btn primary" href="#publications" data-jump="publications">Publications & posters</a>
-              <a class="btn" href="#research" data-jump="research">Current projects</a>
-              <a class="btn" href="cv.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-            </div>
+            <p class="smallnote">
+              Use the navigation above to see my projects, publications/posters, and CV.
+            </p>
           </div>
         </div>
-      </section>
-
-      <section class="section">
-        <h2>Highlights</h2>
-        <div class="grid">
-          <div class="card">
-            <h3>Current project</h3>
-            <p>One sentence about your current work. (You can keep this super simple.)</p>
-          </div>
-          <div class="card">
-            <h3>Latest presentation</h3>
-            <p>Poster title + conference (or short description), with a link on the publications tab.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Quick links</h2>
-        <p class="notice">
-          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar</a>
-          &nbsp;•&nbsp;
-          <a href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">GitHub</a>
-          &nbsp;•&nbsp;
-          <a href="mailto:likaplan@ucsd.edu">youremail@university.edu</a>
-        </p>
       </section>
     </main>
 
@@ -332,7 +334,8 @@
       <section class="panel">
         <h1>About</h1>
         <p class="subtitle">
-          A more detailed bio and research interests.
+          I’m a PhD student in Cognitive Science at <b>[University]</b>, working with <b>[Advisor]</b> in <b>[Lab]</b>.
+          I use <b>[methods]</b> to study <b>[topics]</b>.
         </p>
       </section>
 
@@ -340,10 +343,11 @@
         <h2>Bio</h2>
         <div class="item">
           <b>Short bio</b>
-          <p class="meta">
-            Write 5–8 lines: your program, lab, advisor, and the big question that motivates your work.
-            Mention methods (behavioral experiments, modeling, etc.) in a natural way.
-          </p>
+          <div class="meta">
+            Write 6–10 lines here. A nice structure:
+            program + lab → the big question → 1–2 methods you use → what you hope to contribute →
+            a sentence about collaboration/interests.
+          </div>
         </div>
       </section>
 
@@ -351,22 +355,24 @@
         <h2>Education</h2>
         <ul class="list">
           <li class="item">
-            <b>PhD, Cognitive Science</b> — the University of California, San Diego (2024–present)
-            <div class="meta">Advisor: Name • Lab: Name</div>
+            <b>PhD, Cognitive Science</b> — [University] ([start year]–present)
+            <div class="meta">Advisor: [Name] • Lab: [Name]</div>
           </li>
           <li class="item">
-            <b>B.S./B.A., Neuroscience / Contemplative Studies </b> — University (2022)
-            <div class="meta">Optional: thesis / honors</div>
+            <b>[Degree], [Major]</b> — [University] ([year])
+            <div class="meta">Optional: thesis / honors / relevant lab</div>
           </li>
         </ul>
       </section>
     </main>
 
-    <!-- RESEARCH -->
-    <main id="research" class="view">
+    <!-- PROJECTS (this is your “current projects” but lives off the home page) -->
+    <main id="projects" class="view">
       <section class="panel">
-        <h1>Research</h1>
-        <p class="subtitle">Current projects and what I’m working on.</p>
+        <h1>Projects</h1>
+        <p class="subtitle">
+          Current and recent work. (You can keep each description to 1–3 sentences.)
+        </p>
       </section>
 
       <section class="section">
@@ -374,36 +380,45 @@
         <div class="grid">
           <div class="card">
             <h3>Project A: Title</h3>
-            <p>1–2 sentences: question, approach, why it matters.</p>
+            <p>Question → approach → why it matters (1–3 sentences).</p>
             <div class="links">
               <a class="pill" href="#" target="_blank" rel="noopener">OSF / prereg</a>
-              <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">code</a>
             </div>
           </div>
 
           <div class="card">
             <h3>Project B: Title</h3>
-            <p>1–2 sentences: methods + what you’re testing.</p>
+            <p>Short, understandable description.</p>
             <div class="links">
-              <a class="pill" href="#" target="_blank" rel="noopener">Materials</a>
-              <a class="pill" href="#" target="_blank" rel="noopener">Draft</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">materials</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">draft</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Project C: Title</h3>
+            <p>Short description.</p>
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">repo</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Side project / tool</h3>
+            <p>If you have a package, dataset, tutorial, or analysis pipeline, it can live here.</p>
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">github</a>
             </div>
           </div>
         </div>
       </section>
-
-      <section class="section">
-        <h2>Methods</h2>
-        <p class="notice">
-          Example: Behavioral experiments • computational modeling • survey design • mixed effects models • preregistration
-        </p>
-      </section>
     </main>
 
-    <!-- PUBLICATIONS -->
+    <!-- PUBLICATIONS (includes posters, like Eena’s, but stays its own “page”) -->
     <main id="publications" class="view">
       <section class="panel">
-        <h1>Publications & Presentations</h1>
+        <h1>Publications</h1>
         <p class="subtitle">
           Full list on
           <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar</a>.
@@ -414,40 +429,40 @@
         <h2>Publications</h2>
         <ul class="list">
           <li class="item">
-            <b>Your Name</b>, Coauthor, Coauthor. (2026). <i>Paper title goes here.</i> Journal / Preprint.
+            <b>Kaplan, E.</b>, Coauthor, Coauthor. (2026). <i>Paper title goes here.</i> Journal / Preprint.
             <div class="links">
-              <a class="pill" href="#" target="_blank" rel="noopener">PDF</a>
-              <a class="pill" href="#" target="_blank" rel="noopener">DOI</a>
-              <a class="pill" href="#" target="_blank" rel="noopener">Code</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">pdf</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">doi</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">code</a>
             </div>
             <div class="meta">Optional one-sentence summary.</div>
           </li>
 
           <li class="item">
-            <b>Your Name</b>, Coauthor. (2025). <i>Another publication title.</i> Conference / Journal.
+            <b>Kaplan, E.</b>, Coauthor. (2025). <i>Another publication title.</i> Conference / Journal.
             <div class="links">
-              <a class="pill" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">pdf</a>
             </div>
           </li>
         </ul>
       </section>
 
       <section class="section">
-        <h2>Posters & Talks</h2>
+        <h2>Selected posters & presentations</h2>
         <ul class="list">
           <li class="item">
-            <b>“Poster Title Here”</b> — Conference Name (2025).
+            <b>“Poster title here.”</b> Conference Name (2025).
             <div class="links">
-              <a class="pill" href="#" target="_blank" rel="noopener">Poster PDF</a>
-              <a class="pill" href="#" target="_blank" rel="noopener">Slides</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">poster pdf</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">slides</a>
             </div>
-            <div class="meta">Authors: Your Name, Collaborator.</div>
+            <div class="meta">Authors: Kaplan, E. • Collaborators</div>
           </li>
 
           <li class="item">
-            <b>“Talk Title Here”</b> — Department seminar (2024).
+            <b>“Talk title here.”</b> Department seminar (2024).
             <div class="links">
-              <a class="pill" href="#" target="_blank" rel="noopener">Slides</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">slides</a>
             </div>
           </li>
         </ul>
@@ -459,51 +474,40 @@
       <section class="panel">
         <h1>CV</h1>
         <p class="subtitle">
-          You can view the PDF below, open it in a new tab, or download it.
+          <a href="cv.pdf" target="_blank" rel="noopener">Open the PDF</a> or view it below.
         </p>
-        <div class="buttons">
-          <a class="btn primary" href="cv.pdf" target="_blank" rel="noopener">Open CV</a>
-          <a class="btn" href="cv.pdf" download>Download</a>
+        <div class="links" style="margin-top:12px;">
+          <a class="pill" href="cv.pdf" target="_blank" rel="noopener">open</a>
+          <a class="pill" href="cv.pdf" download>download</a>
         </div>
       </section>
 
       <section class="section">
         <h2>CV (PDF)</h2>
-        <div style="border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.85); box-shadow: var(--shadow-soft); background:white;">
-          <iframe src="cv.pdf" title="CV PDF" style="width:100%; height:78vh; border:0;"></iframe>
+        <div class="frame">
+          <iframe src="cv.pdf" title="CV PDF"></iframe>
         </div>
-        <p class="notice" style="margin-top:12px;">
-          Tip: upload a file named <b>cv.pdf</b> to the same folder as <b>index.html</b>.
-        </p>
-      </section>
-    </main>
-
-    <!-- CONTACT -->
-    <main id="contact" class="view">
-      <section class="panel">
-        <h1>Contact</h1>
-        <p class="subtitle">Best ways to reach me.</p>
-      </section>
-
-      <section class="section">
-        <h2>Links</h2>
-        <div class="notice">
-          Email: <a href="mailto:youremail@university.edu">youremail@university.edu</a><br />
-          Google Scholar: <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">profile →</a><br />
-          GitHub: <a href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">@YOURUSERNAME →</a><br />
-          (Optional) Twitter/Bluesky/LinkedIn: <a href="#" target="_blank" rel="noopener">link →</a>
+        <div class="meta" style="margin-top:10px;">
+          Tip: upload a file named <b>cv.pdf</b> next to <b>index.html</b>.
         </div>
       </section>
     </main>
 
-    <footer>© 2026 Elizabeth Kaplan • GitHub Pages</footer>
+    <footer>
+      © 2026 Elizabeth “Liz” Kaplan • hosted on GitHub Pages
+      <div class="social">
+        <a href="mailto:youremail@university.edu">email</a>
+        <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">scholar</a>
+        <a href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">github</a>
+        <a href="#" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </footer>
   </div>
 
   <script>
     (function () {
       const views = Array.from(document.querySelectorAll(".view"));
       const navButtons = Array.from(document.querySelectorAll(".navlink"));
-      const jumpLinks = Array.from(document.querySelectorAll("[data-jump]"));
 
       function showView(id, pushState = true) {
         const target = document.getElementById(id);
@@ -511,30 +515,18 @@
 
         views.forEach(v => v.classList.toggle("active", v.id === id));
         navButtons.forEach(btn => {
-          const isActive = btn.dataset.view === id;
-          btn.setAttribute("aria-current", isActive ? "page" : "false");
+          const active = btn.dataset.view === id;
+          btn.setAttribute("aria-current", active ? "page" : "false");
         });
 
-        if (pushState) {
-          history.pushState({ view: id }, "", "#" + id);
-        }
+        if (pushState) history.pushState({ view: id }, "", "#" + id);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      // nav button clicks
       navButtons.forEach(btn => {
         btn.addEventListener("click", () => showView(btn.dataset.view));
       });
 
-      // "jump" buttons on home
-      jumpLinks.forEach(a => {
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          showView(a.dataset.jump);
-        });
-      });
-
-      // load from hash
       function loadFromHash() {
         const hash = (location.hash || "#home").replace("#", "");
         showView(hash, false);
