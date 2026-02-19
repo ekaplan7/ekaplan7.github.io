@@ -6,14 +6,13 @@
   <title>Your Name | Cognitive Science PhD</title>
   <meta name="description" content="Graduate student website: research, publications, posters, and CV." />
 
-  <!-- Font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* sage/cream palette */
       --cream:#fbf7ef;
       --cream2:#f6f1e6;
       --sage:#88a89a;
@@ -21,14 +20,12 @@
       --moss:#355b4f;
       --ink:#1f2937;
       --muted:#5b6b62;
-
       --card: rgba(255,255,255,0.62);
       --card-border: rgba(255,255,255,0.78);
       --shadow: 0 14px 40px rgba(31,41,55,0.10);
       --shadow-soft: 0 10px 24px rgba(31,41,55,0.08);
-
       --link: #2f6b58;
-      --pill: rgba(255,255,255,0.70);
+      --focus: rgba(95,132,117,0.25);
     }
 
     *{ box-sizing:border-box; }
@@ -43,30 +40,10 @@
         linear-gradient(135deg, var(--cream), var(--cream2));
       min-height:100vh;
     }
+    a{ color: var(--link); text-decoration:none; font-weight:750; }
+    a:hover{ text-decoration:underline; }
 
-    /* subtle paper grain */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:
-        radial-gradient(rgba(53,91,79,0.06) 1px, transparent 1.2px),
-        radial-gradient(rgba(53,91,79,0.04) 1px, transparent 1.2px);
-      background-size: 60px 60px, 110px 110px;
-      background-position: 0 0, 30px 45px;
-      opacity:0.55;
-      filter: blur(0.2px);
-      z-index:0;
-    }
-
-    .wrap{
-      position:relative;
-      z-index:1;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 22px 18px 52px;
-    }
+    .wrap{ max-width: 1000px; margin:0 auto; padding: 22px 18px 52px; }
 
     /* top nav */
     .topbar{
@@ -84,15 +61,14 @@
       backdrop-filter: blur(12px);
       box-shadow: 0 12px 26px rgba(31,41,55,0.10);
     }
-
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
       padding-left:6px;
-      min-width: 220px;
+      min-width: 200px;
     }
-    .brand-badge{
+    .mark{
       width:34px;
       height:34px;
       border-radius: 14px;
@@ -100,185 +76,123 @@
         radial-gradient(circle at 25% 25%, rgba(136,168,154,0.95), transparent 55%),
         radial-gradient(circle at 70% 70%, rgba(95,132,117,0.95), transparent 55%),
         linear-gradient(135deg, #ffffff, #eef7f1);
-      box-shadow: 0 10px 22px rgba(136,168,154,0.25);
       border: 1px solid rgba(255,255,255,0.92);
+      box-shadow: 0 10px 22px rgba(136,168,154,0.25);
     }
-    .brand strong{ font-size:0.98rem; font-weight:800; }
+    .brand strong{ font-size:0.98rem; font-weight:900; }
     .brand span{ color:var(--muted); font-size:0.85rem; display:block; margin-top:1px; }
 
-    .navlinks{
+    nav{
       display:flex;
       flex-wrap:wrap;
-      gap: 10px;
+      gap: 8px;
       justify-content:flex-end;
       padding-right:6px;
     }
-    .navlinks a{
-      text-decoration:none;
-      color:var(--ink);
+    .navlink{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      background: transparent;
+      color: var(--ink);
+      font-weight: 800;
       font-size:0.92rem;
-      padding:7px 10px;
+      padding: 7px 10px;
       border-radius: 999px;
-      transition: transform .15s ease, background .15s ease;
+      transition: background .15s ease, transform .15s ease;
     }
-    .navlinks a:hover{
+    .navlink:hover{
       background: rgba(255,255,255,0.68);
       transform: translateY(-1px);
     }
+    .navlink[aria-current="page"]{
+      background: rgba(255,255,255,0.75);
+      box-shadow: 0 10px 20px rgba(31,41,55,0.08);
+      outline: 2px solid rgba(95,132,117,0.25);
+      outline-offset: 2px;
+    }
 
-    /* hero */
-    .hero{
-      margin-top: 18px;
-      padding: 26px 22px;
+    /* panels */
+    .panel{
+      margin-top:18px;
+      padding: 24px 22px;
       border-radius: 26px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.80);
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(255,255,255,0.82);
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(650px 260px at 15% 25%, rgba(136,168,154,0.26), transparent 60%),
-        radial-gradient(650px 260px at 85% 30%, rgba(95,132,117,0.18), transparent 60%);
-      z-index:-1;
     }
 
+    /* section visibility */
+    .view{ display:none; }
+    .view.active{ display:block; animation: fade .18s ease-out; }
+    @keyframes fade{
+      from{ opacity:0; transform: translateY(2px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    /* home layout */
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 0.9fr 1.1fr;
       gap: 18px;
-      align-items:start;
+      align-items:center;
     }
-
-    .hero-title{
-      margin:0 0 8px;
-      font-family: "Fraunces", serif;
+    .headshot{
+      width:100%;
+      max-width: 330px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 16px 32px rgba(31,41,55,0.12);
+      background: linear-gradient(135deg, #ffffff, #eef7f1);
+    }
+    h1{
+      margin:0 0 10px;
+      font-family:"Fraunces", serif;
       font-size: clamp(2.0rem, 3.8vw, 3.1rem);
       line-height:1.05;
-      letter-spacing:-0.01em;
-      color: #20312b;
+      color:#20312b;
     }
-    .subtitle{
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 1.02rem;
-    }
-
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top: 10px;
-    }
-    .chip{
-      font-size:0.88rem;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: var(--pill);
-      border: 1px solid rgba(255,255,255,0.86);
-      box-shadow: 0 8px 18px rgba(31,41,55,0.06);
-      color:#2a3a35;
-    }
-
-    .cta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top: 16px;
-    }
+    .subtitle{ margin:0; color:var(--muted); font-size:1.02rem; }
+    .buttons{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
       padding: 10px 14px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.80);
       background: rgba(255,255,255,0.70);
-      text-decoration:none;
       color: var(--ink);
-      font-weight: 750;
-      transition: transform .15s ease, box-shadow .15s ease;
+      font-weight: 900;
       box-shadow: var(--shadow-soft);
-      font-size:0.95rem;
+      transition: transform .15s ease;
     }
-    .btn:hover{ transform: translateY(-2px); }
+    .btn:hover{ transform: translateY(-2px); text-decoration:none; }
     .btn.primary{
       background: linear-gradient(135deg, rgba(136,168,154,0.95), rgba(95,132,117,0.95));
       color:white;
-      border: none;
+      border:none;
       box-shadow: 0 16px 34px rgba(95,132,117,0.22);
     }
-    .btn.ghost{
-      background: rgba(255,255,255,0.55);
-    }
 
-    /* headshot card */
-    .profile{
-      padding: 16px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.78);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-soft);
-    }
-    .headshot{
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 20px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 14px 30px rgba(31,41,55,0.12);
-      background: linear-gradient(135deg, #ffffff, #eef7f1);
-    }
-    .profile h3{
-      margin: 12px 0 8px;
-      font-size: 1.05rem;
-      color:#20312b;
-    }
-    .kv{
-      display:grid;
-      grid-template-columns: 92px 1fr;
-      gap:8px 10px;
-      font-size:0.95rem;
-      color: var(--muted);
-    }
-    .kv b{ color: var(--ink); font-weight:750; }
-
-    /* sections */
+    /* content blocks */
     .section{
-      margin-top: 18px;
-      padding: 20px 18px;
+      margin-top: 14px;
+      padding: 18px 18px;
       border-radius: 26px;
       background: rgba(255,255,255,0.46);
       border: 1px solid rgba(255,255,255,0.74);
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 25px rgba(31,41,55,0.06);
     }
-    .section-header{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 10px;
-    }
     .section h2{
-      margin:0;
-      font-family: "Fraunces", serif;
-      font-weight:650;
-      font-size: 1.5rem;
-      letter-spacing:-0.01em;
+      margin:0 0 10px;
+      font-family:"Fraunces", serif;
+      font-size: 1.45rem;
       color:#20312b;
-    }
-    .section .hint{
-      margin:0;
-      color: var(--muted);
-      font-size: 0.92rem;
     }
 
     .grid{
@@ -293,42 +207,11 @@
       background: rgba(255,255,255,0.64);
       border: 1px solid rgba(255,255,255,0.82);
       box-shadow: 0 10px 22px rgba(31,41,55,0.07);
-      transition: transform .15s ease;
     }
-    .card:hover{ transform: translateY(-2px); }
-    .card h3{ margin:0 0 6px; font-size: 1.05rem; color:#22312b; }
-    .card p{ margin:0; color: var(--muted); font-size: 0.95rem; }
+    .card h3{ margin:0 0 6px; color:#22312b; font-size:1.05rem; }
+    .card p{ margin:0; color:var(--muted); font-size:0.95rem; }
 
-    .meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top: 10px;
-    }
-    .tag{
-      font-size:0.82rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(255,255,255,0.9);
-      color: #2c3c36;
-    }
-    a{
-      color: var(--link);
-      text-decoration:none;
-      font-weight:750;
-    }
-    a:hover{ text-decoration:underline; }
-
-    /* publication list */
-    .list{
-      margin: 8px 0 0;
-      padding: 0;
-      list-style: none;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
+    .list{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
     .item{
       padding: 14px 14px;
       border-radius: 20px;
@@ -336,46 +219,29 @@
       border: 1px solid rgba(255,255,255,0.82);
       box-shadow: 0 10px 22px rgba(31,41,55,0.07);
     }
-    .item .top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 12px;
-    }
-    .item b{ font-size: 1.02rem; color:#22312b; }
-    .when{
-      font-size:0.85rem;
-      color: var(--muted);
-      padding: 6px 10px;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid rgba(255,255,255,0.92);
-      border-radius: 999px;
-      white-space:nowrap;
-    }
-    .item p{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .pub-links{
-      margin-top:8px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    .pilllink{
+    .item b{ color:#22312b; }
+    .meta{ margin-top:8px; color:var(--muted); font-size:0.95rem; }
+    .links{ margin-top:10px; display:flex; flex-wrap:wrap; gap:10px; }
+    .pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
       padding: 7px 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.78);
       border: 1px solid rgba(255,255,255,0.9);
       font-size: 0.9rem;
-      font-weight: 750;
+      font-weight: 900;
       color: #24443a;
     }
-    .pilllink:hover{ text-decoration:none; transform: translateY(-1px); }
+    .pill:hover{ text-decoration:none; transform: translateY(-1px); }
+
+    .notice{
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(255,255,255,0.82);
+      color: var(--muted);
+    }
 
     footer{
       margin-top: 18px;
@@ -385,339 +251,302 @@
       padding: 18px 10px;
     }
 
-    /* responsive */
     @media (max-width: 900px){
       .hero-grid{ grid-template-columns: 1fr; }
+      .headshot{ max-width: 260px; }
       .card{ grid-column: span 12; }
-      .kv{ grid-template-columns: 90px 1fr; }
-      .brand{ min-width: unset; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
     <div class="topbar">
       <div class="brand">
-        <div class="brand-badge" aria-hidden="true"></div>
+        <div class="mark" aria-hidden="true"></div>
         <div>
           <strong>Your Name</strong>
           <span>Cognitive Science PhD Student</span>
         </div>
       </div>
 
-      <div class="navlinks">
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#pubs">Publications</a>
-        <a href="#projects">Projects</a>
-        <a href="#cv">CV</a>
-        <a href="#links">Links</a>
-      </div>
+      <nav aria-label="Primary">
+        <button class="navlink" data-view="home" aria-current="page">Home</button>
+        <button class="navlink" data-view="about">About</button>
+        <button class="navlink" data-view="research">Research</button>
+        <button class="navlink" data-view="publications">Publications</button>
+        <button class="navlink" data-view="cv">CV</button>
+        <button class="navlink" data-view="contact">Contact</button>
+      </nav>
     </div>
 
-    <header class="hero">
-      <div class="hero-grid">
-        <div>
-          <h1 class="hero-title">Hi, I’m Your Name 🌿</h1>
-          <p class="subtitle">
-            I’m a Cognitive Science PhD student at <b>Your University</b>.
-            I study <b>your focus</b> using experiments and computational approaches —
-            especially around <b>learning</b>, <b>attention</b>, and <b>decision-making</b>.
-          </p>
-
-          <div class="chips">
-            <span class="chip">🧠 Cog Sci PhD</span>
-            <span class="chip">📊 Behavioral + Computational</span>
-            <span class="chip">🧪 Experiments</span>
-            <span class="chip">🌱 Open science</span>
-          </div>
-
-          <div class="cta">
-            <a class="btn primary" href="#pubs">Publications & posters</a>
-            <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Open CV</a>
-            <a class="btn ghost" href="mailto:youremail@university.edu">Email</a>
-          </div>
-        </div>
-
-        <aside class="profile">
-          <!-- Put a file named headshot.jpg in the same folder as index.html -->
+    <!-- HOME -->
+    <main id="home" class="view active">
+      <section class="panel">
+        <div class="hero-grid">
           <img class="headshot" src="headshot.jpg" alt="Headshot of Your Name" />
+          <div>
+            <h1>Your Name</h1>
+            <p class="subtitle">
+              I’m a Cognitive Science PhD student at <b>Your University</b>. I study <b>your focus</b> —
+              broadly, how people <b>learn</b>, <b>make decisions</b>, and <b>adapt</b> in real-world environments.
+            </p>
 
-          <h3>At a glance</h3>
-          <div class="kv">
-            <b>Program</b> <span>PhD, Cognitive Science</span>
-            <b>Lab</b> <span>Your Lab Name</span>
-            <b>Advisor</b> <span>Advisor Name</span>
-            <b>Location</b> <span>City, State</span>
+            <div class="buttons">
+              <a class="btn primary" href="#publications" data-jump="publications">Publications & posters</a>
+              <a class="btn" href="#research" data-jump="research">Current projects</a>
+              <a class="btn" href="cv.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+            </div>
           </div>
-        </aside>
-      </div>
-    </header>
-
-    <!-- About -->
-    <section id="about" class="section">
-      <div class="section-header">
-        <h2>About</h2>
-        <p class="hint">A little context + what I care about</p>
-      </div>
-
-      <div class="item">
-        <div class="top">
-          <b>Bio</b>
-          <span class="when">Updated 2026</span>
         </div>
-        <p>
-          I’m a Cognitive Science PhD student at <b>Your University</b>. My research asks:
-          <i>your one-sentence big question</i>. I’m especially interested in
-          <b>your topics</b>, and I like building tools/workflows that make research more reproducible.
-          Outside the lab, I’m into <i>your hobbies</i>.
+      </section>
+
+      <section class="section">
+        <h2>Highlights</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Current project</h3>
+            <p>One sentence about your current work. (You can keep this super simple.)</p>
+          </div>
+          <div class="card">
+            <h3>Latest presentation</h3>
+            <p>Poster title + conference (or short description), with a link on the publications tab.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Quick links</h2>
+        <p class="notice">
+          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar</a>
+          &nbsp;•&nbsp;
+          <a href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">GitHub</a>
+          &nbsp;•&nbsp;
+          <a href="mailto:youremail@university.edu">youremail@university.edu</a>
         </p>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Research -->
-    <section id="research" class="section">
-      <div class="section-header">
-        <h2>Current research projects</h2>
-        <p class="hint">What I’m actively working on right now</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Project A: Title</h3>
-          <p>1–2 sentences: the question, approach, and why it matters.</p>
-          <div class="meta">
-            <span class="tag">experiment</span>
-            <span class="tag">in progress</span>
-            <span class="tag">modeling</span>
-          </div>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">OSF / prereg →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Repo →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Project B: Title</h3>
-          <p>1–2 sentences: methods + what you’re testing.</p>
-          <div class="meta">
-            <span class="tag">analysis</span>
-            <span class="tag">collaboration</span>
-            <span class="tag">study design</span>
-          </div>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Materials →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Draft →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Side quest: Tool / Dataset / Tutorial</h3>
-          <p>Something you’ve built (or are building) that others can use.</p>
-          <div class="meta">
-            <span class="tag">open-source</span>
-            <span class="tag">python / r</span>
-          </div>
-          <div class="pub-links">
-            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">GitHub →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Service / Teaching</h3>
-          <p>TA, mentoring, reviewing, outreach, or organizing (optional but nice!).</p>
-          <div class="meta">
-            <span class="tag">mentorship</span>
-            <span class="tag">teaching</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Publications & Posters (combined, as requested) -->
-    <section id="pubs" class="section">
-      <div class="section-header">
-        <h2>Publications & presentations</h2>
-        <p class="hint">
-          Papers, posters, and talks •
-          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar →</a>
+    <!-- ABOUT -->
+    <main id="about" class="view">
+      <section class="panel">
+        <h1>About</h1>
+        <p class="subtitle">
+          A more detailed bio and research interests.
         </p>
-      </div>
+      </section>
 
-      <!-- Publications -->
-      <h3 style="margin: 10px 4px 6px; color:#22312b;">Publications</h3>
-      <ul class="list">
-        <li class="item">
-          <div class="top">
-            <b>Your Name, Coauthor, Coauthor. (2026). Paper title goes here.</b>
-            <span class="when">Journal / Preprint</span>
-          </div>
-          <p>One sentence summary (optional).</p>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">PDF →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">DOI →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Code →</a>
-          </div>
-        </li>
-
-        <li class="item">
-          <div class="top">
-            <b>Your Name, Coauthor. (2025). Another publication title.</b>
-            <span class="when">Conference / Journal</span>
-          </div>
-          <p>Optional one-liner.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">PDF →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Supplement →</a>
-          </div>
-        </li>
-      </ul>
-
-      <!-- Posters / Presentations -->
-      <h3 style="margin: 16px 4px 6px; color:#22312b;">Posters & talks</h3>
-      <ul class="list">
-        <li class="item">
-          <div class="top">
-            <b>“Poster Title Here” — Conference Name</b>
-            <span class="when">2025</span>
-          </div>
-          <p>
-            Authors: Your Name, Collaborator, Collaborator. Brief line about the finding.
+      <section class="section">
+        <h2>Bio</h2>
+        <div class="item">
+          <b>Short bio</b>
+          <p class="meta">
+            Write 5–8 lines: your program, lab, advisor, and the big question that motivates your work.
+            Mention methods (behavioral experiments, modeling, etc.) in a natural way.
           </p>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Poster PDF →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Slides →</a>
-          </div>
-        </li>
-
-        <li class="item">
-          <div class="top">
-            <b>“Talk Title Here” — Invited talk / Dept. seminar</b>
-            <span class="when">2024</span>
-          </div>
-          <p>One sentence about the topic.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Slides →</a>
-          </div>
-        </li>
-      </ul>
-
-      <div class="item" style="margin-top:12px;">
-        <div class="top">
-          <b>Complete list</b>
-          <span class="when">Scholar</span>
         </div>
-        <p>
-          For the full, always-up-to-date publication list, see my
-          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar profile</a>.
+      </section>
+
+      <section class="section">
+        <h2>Education</h2>
+        <ul class="list">
+          <li class="item">
+            <b>PhD, Cognitive Science</b> — Your University (20XX–present)
+            <div class="meta">Advisor: Name • Lab: Name</div>
+          </li>
+          <li class="item">
+            <b>B.A./B.S., Major</b> — University (20XX)
+            <div class="meta">Optional: thesis / honors</div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- RESEARCH -->
+    <main id="research" class="view">
+      <section class="panel">
+        <h1>Research</h1>
+        <p class="subtitle">Current projects and what I’m working on.</p>
+      </section>
+
+      <section class="section">
+        <h2>Current projects</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Project A: Title</h3>
+            <p>1–2 sentences: question, approach, why it matters.</p>
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">OSF / prereg</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Project B: Title</h3>
+            <p>1–2 sentences: methods + what you’re testing.</p>
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">Materials</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">Draft</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Methods</h2>
+        <p class="notice">
+          Example: Behavioral experiments • computational modeling • survey design • mixed effects models • preregistration
         </p>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Projects -->
-    <section id="projects" class="section">
-      <div class="section-header">
-        <h2>Selected projects</h2>
-        <p class="hint">Code, datasets, tutorials, collaborations</p>
-      </div>
+    <!-- PUBLICATIONS -->
+    <main id="publications" class="view">
+      <section class="panel">
+        <h1>Publications & Presentations</h1>
+        <p class="subtitle">
+          Full list on
+          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar</a>.
+        </p>
+      </section>
 
-      <div class="grid">
-        <div class="card">
-          <h3>Project: Repo / Tool</h3>
-          <p>What it does + who it helps.</p>
-          <div class="meta">
-            <span class="tag">python</span>
-            <span class="tag">reproducible</span>
-          </div>
-          <div class="pub-links">
-            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">Repo →</a>
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Demo →</a>
-          </div>
-        </div>
+      <section class="section">
+        <h2>Publications</h2>
+        <ul class="list">
+          <li class="item">
+            <b>Your Name</b>, Coauthor, Coauthor. (2026). <i>Paper title goes here.</i> Journal / Preprint.
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">DOI</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">Code</a>
+            </div>
+            <div class="meta">Optional one-sentence summary.</div>
+          </li>
 
-        <div class="card">
-          <h3>Project: Tutorial / Methods</h3>
-          <p>A short friendly description.</p>
-          <div class="meta">
-            <span class="tag">teaching</span>
-            <span class="tag">stats</span>
-          </div>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Read →</a>
-          </div>
-        </div>
-      </div>
-    </section>
+          <li class="item">
+            <b>Your Name</b>, Coauthor. (2025). <i>Another publication title.</i> Conference / Journal.
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">PDF</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Posters & Talks</h2>
+        <ul class="list">
+          <li class="item">
+            <b>“Poster Title Here”</b> — Conference Name (2025).
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">Poster PDF</a>
+              <a class="pill" href="#" target="_blank" rel="noopener">Slides</a>
+            </div>
+            <div class="meta">Authors: Your Name, Collaborator.</div>
+          </li>
+
+          <li class="item">
+            <b>“Talk Title Here”</b> — Department seminar (2024).
+            <div class="links">
+              <a class="pill" href="#" target="_blank" rel="noopener">Slides</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
 
     <!-- CV -->
-    <section id="cv" class="section">
-      <div class="section-header">
-        <h2>CV</h2>
-        <p class="hint">Upload as <code>cv.pdf</code> in this repo</p>
-      </div>
-
-      <div class="item">
-        <div class="top">
-          <b>Download</b>
-          <span class="when">PDF</span>
-        </div>
-        <p style="margin-top:8px;">
+    <main id="cv" class="view">
+      <section class="panel">
+        <h1>CV</h1>
+        <p class="subtitle">
+          You can view the PDF below, open it in a new tab, or download it.
+        </p>
+        <div class="buttons">
           <a class="btn primary" href="cv.pdf" target="_blank" rel="noopener">Open CV</a>
           <a class="btn" href="cv.pdf" download>Download</a>
-        </p>
-        <p style="margin-top:10px;">
-          Tip: put <b>cv.pdf</b> next to <b>index.html</b> in your GitHub repo.
-        </p>
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <!-- Links -->
-    <section id="links" class="section">
-      <div class="section-header">
+      <section class="section">
+        <h2>CV (PDF)</h2>
+        <div style="border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.85); box-shadow: var(--shadow-soft); background:white;">
+          <iframe src="cv.pdf" title="CV PDF" style="width:100%; height:78vh; border:0;"></iframe>
+        </div>
+        <p class="notice" style="margin-top:12px;">
+          Tip: upload a file named <b>cv.pdf</b> to the same folder as <b>index.html</b>.
+        </p>
+      </section>
+    </main>
+
+    <!-- CONTACT -->
+    <main id="contact" class="view">
+      <section class="panel">
+        <h1>Contact</h1>
+        <p class="subtitle">Best ways to reach me.</p>
+      </section>
+
+      <section class="section">
         <h2>Links</h2>
-        <p class="hint">Find my work around the internet</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Google Scholar</h3>
-          <p>Publications + citations.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Visit →</a>
-          </div>
+        <div class="notice">
+          Email: <a href="mailto:youremail@university.edu">youremail@university.edu</a><br />
+          Google Scholar: <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">profile →</a><br />
+          GitHub: <a href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">@YOURUSERNAME →</a><br />
+          (Optional) Twitter/Bluesky/LinkedIn: <a href="#" target="_blank" rel="noopener">link →</a>
         </div>
+      </section>
+    </main>
 
-        <div class="card">
-          <h3>GitHub</h3>
-          <p>Code, projects, and reproducible research.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">Visit →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>OSF / Lab page</h3>
-          <p>Pre-registrations, materials, data, etc.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="#" target="_blank" rel="noopener">Visit →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Contact</h3>
-          <p>Best way to reach me.</p>
-          <div class="pub-links">
-            <a class="pilllink" href="mailto:youremail@university.edu">youremail@university.edu →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      © 2026 Your Name • sage + cream vibes • hosted on GitHub Pages
-    </footer>
+    <footer>© 2026 Your Name • sage + cream • GitHub Pages</footer>
   </div>
+
+  <script>
+    (function () {
+      const views = Array.from(document.querySelectorAll(".view"));
+      const navButtons = Array.from(document.querySelectorAll(".navlink"));
+      const jumpLinks = Array.from(document.querySelectorAll("[data-jump]"));
+
+      function showView(id, pushState = true) {
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        views.forEach(v => v.classList.toggle("active", v.id === id));
+        navButtons.forEach(btn => {
+          const isActive = btn.dataset.view === id;
+          btn.setAttribute("aria-current", isActive ? "page" : "false");
+        });
+
+        if (pushState) {
+          history.pushState({ view: id }, "", "#" + id);
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // nav button clicks
+      navButtons.forEach(btn => {
+        btn.addEventListener("click", () => showView(btn.dataset.view));
+      });
+
+      // "jump" buttons on home
+      jumpLinks.forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          showView(a.dataset.jump);
+        });
+      });
+
+      // load from hash
+      function loadFromHash() {
+        const hash = (location.hash || "#home").replace("#", "");
+        showView(hash, false);
+      }
+
+      window.addEventListener("popstate", (e) => {
+        const view = (e.state && e.state.view) ? e.state.view : (location.hash || "#home").replace("#", "");
+        showView(view, false);
+      });
+
+      loadFromHash();
+    })();
+  </script>
 </body>
 </html>
