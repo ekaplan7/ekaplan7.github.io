@@ -3,158 +3,721 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | GitHub Portfolio</title>
-  <meta name="description" content="Personal website connected to my GitHub profile." />
-  <link rel="icon" href="https://github.githubassets.com/favicons/favicon.png" />
+  <title>Your Name | Cognitive Science PhD</title>
+  <meta name="description" content="Graduate student website: research, publications, posters, and CV." />
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --accent: #3b82f6;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
+    :root{
+      /* sage/cream palette */
+      --cream:#fbf7ef;
+      --cream2:#f6f1e6;
+      --sage:#88a89a;
+      --sage2:#5f8475;
+      --moss:#355b4f;
+      --ink:#1f2937;
+      --muted:#5b6b62;
+
+      --card: rgba(255,255,255,0.62);
+      --card-border: rgba(255,255,255,0.78);
+      --shadow: 0 14px 40px rgba(31,41,55,0.10);
+      --shadow-soft: 0 10px 24px rgba(31,41,55,0.08);
+
+      --link: #2f6b58;
+      --pill: rgba(255,255,255,0.70);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: "Manrope", system-ui, -apple-system, Segoe UI, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 500px at 18% 12%, rgba(136,168,154,0.28), transparent 60%),
+        radial-gradient(850px 520px at 84% 18%, rgba(95,132,117,0.20), transparent 58%),
+        linear-gradient(135deg, var(--cream), var(--cream2));
+      min-height:100vh;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    /* subtle paper grain */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(rgba(53,91,79,0.06) 1px, transparent 1.2px),
+        radial-gradient(rgba(53,91,79,0.04) 1px, transparent 1.2px);
+      background-size: 60px 60px, 110px 110px;
+      background-position: 0 0, 30px 45px;
+      opacity:0.55;
+      filter: blur(0.2px);
+      z-index:0;
     }
 
-    header {
-      padding: 2rem;
-      text-align: center;
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 22px 18px 52px;
     }
 
-    header h1 {
-      font-size: 2.5rem;
+    /* top nav */
+    .topbar{
+      position:sticky;
+      top:12px;
+      z-index:10;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 26px rgba(31,41,55,0.10);
     }
 
-    header p {
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding-left:6px;
+      min-width: 220px;
+    }
+    .brand-badge{
+      width:34px;
+      height:34px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(136,168,154,0.95), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(95,132,117,0.95), transparent 55%),
+        linear-gradient(135deg, #ffffff, #eef7f1);
+      box-shadow: 0 10px 22px rgba(136,168,154,0.25);
+      border: 1px solid rgba(255,255,255,0.92);
+    }
+    .brand strong{ font-size:0.98rem; font-weight:800; }
+    .brand span{ color:var(--muted); font-size:0.85rem; display:block; margin-top:1px; }
+
+    .navlinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      justify-content:flex-end;
+      padding-right:6px;
+    }
+    .navlinks a{
+      text-decoration:none;
+      color:var(--ink);
+      font-size:0.92rem;
+      padding:7px 10px;
+      border-radius: 999px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .navlinks a:hover{
+      background: rgba(255,255,255,0.68);
+      transform: translateY(-1px);
+    }
+
+    /* hero */
+    .hero{
+      margin-top: 18px;
+      padding: 26px 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.80);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(650px 260px at 15% 25%, rgba(136,168,154,0.26), transparent 60%),
+        radial-gradient(650px 260px at 85% 30%, rgba(95,132,117,0.18), transparent 60%);
+      z-index:-1;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    .hero-title{
+      margin:0 0 8px;
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.0rem, 3.8vw, 3.1rem);
+      line-height:1.05;
+      letter-spacing:-0.01em;
+      color: #20312b;
+    }
+    .subtitle{
+      margin: 0 0 14px;
       color: var(--muted);
-      margin-top: 0.5rem;
+      font-size: 1.02rem;
     }
 
-    nav {
-      margin-top: 1rem;
-    }
-
-    nav a {
-      color: var(--accent);
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    section {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-
-    h2 {
-      margin-bottom: 1rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
-      padding-bottom: 5px;
-    }
-
-    .card {
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 10px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .button {
-      display: inline-block;
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
       margin-top: 10px;
-      padding: 8px 14px;
-      background: var(--accent);
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
+    }
+    .chip{
+      font-size:0.88rem;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--pill);
+      border: 1px solid rgba(255,255,255,0.86);
+      box-shadow: 0 8px 18px rgba(31,41,55,0.06);
+      color:#2a3a35;
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 16px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.80);
+      background: rgba(255,255,255,0.70);
+      text-decoration:none;
+      color: var(--ink);
+      font-weight: 750;
+      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: var(--shadow-soft);
+      font-size:0.95rem;
+    }
+    .btn:hover{ transform: translateY(-2px); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(136,168,154,0.95), rgba(95,132,117,0.95));
+      color:white;
+      border: none;
+      box-shadow: 0 16px 34px rgba(95,132,117,0.22);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,0.55);
+    }
+
+    /* headshot card */
+    .profile{
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-soft);
+    }
+    .headshot{
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 14px 30px rgba(31,41,55,0.12);
+      background: linear-gradient(135deg, #ffffff, #eef7f1);
+    }
+    .profile h3{
+      margin: 12px 0 8px;
+      font-size: 1.05rem;
+      color:#20312b;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 92px 1fr;
+      gap:8px 10px;
+      font-size:0.95rem;
       color: var(--muted);
-      font-size: 0.9rem;
-      border-top: 1px solid #334155;
-      margin-top: 3rem;
+    }
+    .kv b{ color: var(--ink); font-weight:750; }
+
+    /* sections */
+    .section{
+      margin-top: 18px;
+      padding: 20px 18px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(255,255,255,0.74);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(31,41,55,0.06);
+    }
+    .section-header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .section h2{
+      margin:0;
+      font-family: "Fraunces", serif;
+      font-weight:650;
+      font-size: 1.5rem;
+      letter-spacing:-0.01em;
+      color:#20312b;
+    }
+    .section .hint{
+      margin:0;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card{
+      grid-column: span 6;
+      padding: 14px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: 0 10px 22px rgba(31,41,55,0.07);
+      transition: transform .15s ease;
+    }
+    .card:hover{ transform: translateY(-2px); }
+    .card h3{ margin:0 0 6px; font-size: 1.05rem; color:#22312b; }
+    .card p{ margin:0; color: var(--muted); font-size: 0.95rem; }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+    }
+    .tag{
+      font-size:0.82rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.9);
+      color: #2c3c36;
+    }
+    a{
+      color: var(--link);
+      text-decoration:none;
+      font-weight:750;
+    }
+    a:hover{ text-decoration:underline; }
+
+    /* publication list */
+    .list{
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .item{
+      padding: 14px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: 0 10px 22px rgba(31,41,55,0.07);
+    }
+    .item .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .item b{ font-size: 1.02rem; color:#22312b; }
+    .when{
+      font-size:0.85rem;
+      color: var(--muted);
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.92);
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+    .item p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .pub-links{
+      margin-top:8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .pilllink{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+      font-weight: 750;
+      color: #24443a;
+    }
+    .pilllink:hover{ text-decoration:none; transform: translateY(-1px); }
+
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: var(--muted);
+      font-size:0.9rem;
+      padding: 18px 10px;
+    }
+
+    /* responsive */
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      .kv{ grid-template-columns: 90px 1fr; }
+      .brand{ min-width: unset; }
     }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-  <header>
-    <h1>Your Name</h1>
-    <p>Developer • Creator • Open Source Enthusiast</p>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true"></div>
+        <div>
+          <strong>Your Name</strong>
+          <span>Cognitive Science PhD Student</span>
+        </div>
+      </div>
 
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="https://github.com/YOURUSERNAME" target="_blank">GitHub</a>
-    </nav>
-  </header>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="card">
-      <p>
-        Hello! I'm a developer passionate about building clean, efficient,
-        and impactful software. I enjoy working with modern web technologies
-        and contributing to open-source projects.
-      </p>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="card">
-      <h3>Project One</h3>
-      <p>A short description of your project goes here.</p>
-      <a class="button" href="https://github.com/YOURUSERNAME/project1" target="_blank">
-        View on GitHub
-      </a>
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#pubs">Publications</a>
+        <a href="#projects">Projects</a>
+        <a href="#cv">CV</a>
+        <a href="#links">Links</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Project Two</h3>
-      <p>A short description of your project goes here.</p>
-      <a class="button" href="https://github.com/YOURUSERNAME/project2" target="_blank">
-        View on GitHub
-      </a>
-    </div>
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-title">Hi, I’m Your Name 🌿</h1>
+          <p class="subtitle">
+            I’m a Cognitive Science PhD student at <b>Your University</b>.
+            I study <b>your focus</b> using experiments and computational approaches —
+            especially around <b>learning</b>, <b>attention</b>, and <b>decision-making</b>.
+          </p>
 
-  </section>
+          <div class="chips">
+            <span class="chip">🧠 Cog Sci PhD</span>
+            <span class="chip">📊 Behavioral + Computational</span>
+            <span class="chip">🧪 Experiments</span>
+            <span class="chip">🌱 Open science</span>
+          </div>
 
-  <footer>
-    © 2026 Your Name • Built with HTML & GitHub Pages
-  </footer>
+          <div class="cta">
+            <a class="btn primary" href="#pubs">Publications & posters</a>
+            <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Open CV</a>
+            <a class="btn ghost" href="mailto:youremail@university.edu">Email</a>
+          </div>
+        </div>
 
+        <aside class="profile">
+          <!-- Put a file named headshot.jpg in the same folder as index.html -->
+          <img class="headshot" src="headshot.jpg" alt="Headshot of Your Name" />
+
+          <h3>At a glance</h3>
+          <div class="kv">
+            <b>Program</b> <span>PhD, Cognitive Science</span>
+            <b>Lab</b> <span>Your Lab Name</span>
+            <b>Advisor</b> <span>Advisor Name</span>
+            <b>Location</b> <span>City, State</span>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="section-header">
+        <h2>About</h2>
+        <p class="hint">A little context + what I care about</p>
+      </div>
+
+      <div class="item">
+        <div class="top">
+          <b>Bio</b>
+          <span class="when">Updated 2026</span>
+        </div>
+        <p>
+          I’m a Cognitive Science PhD student at <b>Your University</b>. My research asks:
+          <i>your one-sentence big question</i>. I’m especially interested in
+          <b>your topics</b>, and I like building tools/workflows that make research more reproducible.
+          Outside the lab, I’m into <i>your hobbies</i>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="section">
+      <div class="section-header">
+        <h2>Current research projects</h2>
+        <p class="hint">What I’m actively working on right now</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Project A: Title</h3>
+          <p>1–2 sentences: the question, approach, and why it matters.</p>
+          <div class="meta">
+            <span class="tag">experiment</span>
+            <span class="tag">in progress</span>
+            <span class="tag">modeling</span>
+          </div>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">OSF / prereg →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Repo →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Project B: Title</h3>
+          <p>1–2 sentences: methods + what you’re testing.</p>
+          <div class="meta">
+            <span class="tag">analysis</span>
+            <span class="tag">collaboration</span>
+            <span class="tag">study design</span>
+          </div>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Materials →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Draft →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Side quest: Tool / Dataset / Tutorial</h3>
+          <p>Something you’ve built (or are building) that others can use.</p>
+          <div class="meta">
+            <span class="tag">open-source</span>
+            <span class="tag">python / r</span>
+          </div>
+          <div class="pub-links">
+            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">GitHub →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Service / Teaching</h3>
+          <p>TA, mentoring, reviewing, outreach, or organizing (optional but nice!).</p>
+          <div class="meta">
+            <span class="tag">mentorship</span>
+            <span class="tag">teaching</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications & Posters (combined, as requested) -->
+    <section id="pubs" class="section">
+      <div class="section-header">
+        <h2>Publications & presentations</h2>
+        <p class="hint">
+          Papers, posters, and talks •
+          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar →</a>
+        </p>
+      </div>
+
+      <!-- Publications -->
+      <h3 style="margin: 10px 4px 6px; color:#22312b;">Publications</h3>
+      <ul class="list">
+        <li class="item">
+          <div class="top">
+            <b>Your Name, Coauthor, Coauthor. (2026). Paper title goes here.</b>
+            <span class="when">Journal / Preprint</span>
+          </div>
+          <p>One sentence summary (optional).</p>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">PDF →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">DOI →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </li>
+
+        <li class="item">
+          <div class="top">
+            <b>Your Name, Coauthor. (2025). Another publication title.</b>
+            <span class="when">Conference / Journal</span>
+          </div>
+          <p>Optional one-liner.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">PDF →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Supplement →</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Posters / Presentations -->
+      <h3 style="margin: 16px 4px 6px; color:#22312b;">Posters & talks</h3>
+      <ul class="list">
+        <li class="item">
+          <div class="top">
+            <b>“Poster Title Here” — Conference Name</b>
+            <span class="when">2025</span>
+          </div>
+          <p>
+            Authors: Your Name, Collaborator, Collaborator. Brief line about the finding.
+          </p>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Poster PDF →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Slides →</a>
+          </div>
+        </li>
+
+        <li class="item">
+          <div class="top">
+            <b>“Talk Title Here” — Invited talk / Dept. seminar</b>
+            <span class="when">2024</span>
+          </div>
+          <p>One sentence about the topic.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Slides →</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="item" style="margin-top:12px;">
+        <div class="top">
+          <b>Complete list</b>
+          <span class="when">Scholar</span>
+        </div>
+        <p>
+          For the full, always-up-to-date publication list, see my
+          <a href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Google Scholar profile</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="section-header">
+        <h2>Selected projects</h2>
+        <p class="hint">Code, datasets, tutorials, collaborations</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Project: Repo / Tool</h3>
+          <p>What it does + who it helps.</p>
+          <div class="meta">
+            <span class="tag">python</span>
+            <span class="tag">reproducible</span>
+          </div>
+          <div class="pub-links">
+            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">Repo →</a>
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Demo →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Project: Tutorial / Methods</h3>
+          <p>A short friendly description.</p>
+          <div class="meta">
+            <span class="tag">teaching</span>
+            <span class="tag">stats</span>
+          </div>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Read →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="section">
+      <div class="section-header">
+        <h2>CV</h2>
+        <p class="hint">Upload as <code>cv.pdf</code> in this repo</p>
+      </div>
+
+      <div class="item">
+        <div class="top">
+          <b>Download</b>
+          <span class="when">PDF</span>
+        </div>
+        <p style="margin-top:8px;">
+          <a class="btn primary" href="cv.pdf" target="_blank" rel="noopener">Open CV</a>
+          <a class="btn" href="cv.pdf" download>Download</a>
+        </p>
+        <p style="margin-top:10px;">
+          Tip: put <b>cv.pdf</b> next to <b>index.html</b> in your GitHub repo.
+        </p>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section id="links" class="section">
+      <div class="section-header">
+        <h2>Links</h2>
+        <p class="hint">Find my work around the internet</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Google Scholar</h3>
+          <p>Publications + citations.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="https://scholar.google.com/citations?user=YOURIDHERE" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>GitHub</h3>
+          <p>Code, projects, and reproducible research.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="https://github.com/YOURUSERNAME" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>OSF / Lab page</h3>
+          <p>Pre-registrations, materials, data, etc.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="#" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Contact</h3>
+          <p>Best way to reach me.</p>
+          <div class="pub-links">
+            <a class="pilllink" href="mailto:youremail@university.edu">youremail@university.edu →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Your Name • sage + cream vibes • hosted on GitHub Pages
+    </footer>
+  </div>
 </body>
 </html>
