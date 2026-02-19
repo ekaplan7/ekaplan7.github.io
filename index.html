@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name | GitHub Portfolio</title>
+  <meta name="description" content="Personal website connected to my GitHub profile." />
+  <link rel="icon" href="https://github.githubassets.com/favicons/favicon.png" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #3b82f6;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    header p {
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    nav {
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: var(--accent);
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    section {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: var(--accent);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid #334155;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Your Name</h1>
+    <p>Developer • Creator • Open Source Enthusiast</p>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/YOURUSERNAME" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="card">
+      <p>
+        Hello! I'm a developer passionate about building clean, efficient,
+        and impactful software. I enjoy working with modern web technologies
+        and contributing to open-source projects.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="card">
+      <h3>Project One</h3>
+      <p>A short description of your project goes here.</p>
+      <a class="button" href="https://github.com/YOURUSERNAME/project1" target="_blank">
+        View on GitHub
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>Project Two</h3>
+      <p>A short description of your project goes here.</p>
+      <a class="button" href="https://github.com/YOURUSERNAME/project2" target="_blank">
+        View on GitHub
+      </a>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 Your Name • Built with HTML & GitHub Pages
+  </footer>
+
+</body>
+</html>
